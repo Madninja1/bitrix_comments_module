@@ -1,0 +1,17 @@
+# Bitrix ядро
+/bitrix/
+/upload/
+/local/cache/
+/bitrix/cache/
+/bitrix/managed_cache/
+/bitrix/stack_cache/
+
+# Логи
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
