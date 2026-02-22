@@ -44,6 +44,8 @@ class ameton_comments extends CModule
 
         $this->installDB();
         Settings::installDefaults();
+
+        $this->installFiles();
     }
 
     public function DoUninstall(): void
@@ -62,6 +64,8 @@ class ameton_comments extends CModule
         Settings::uninstallDefaults();
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
+
+        $this->uninstallFiles();
     }
 
     public function installDB(): void
@@ -72,6 +76,24 @@ class ameton_comments extends CModule
     public function uninstallDB(): void
     {
         $this->executeSqlFile(__DIR__ . '/db/mysql/uninstall.sql');
+    }
+
+    public function installFiles(): void
+    {
+        CopyDirFiles(
+            __DIR__ . '/../admin',
+            $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin',
+            true,   // rewrite
+            true    // recursive
+        );
+    }
+
+    public function uninstallFiles(): void
+    {
+        DeleteDirFiles(
+            __DIR__ . '/../admin',
+            $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin'
+        );
     }
 
     private function executeSqlFile(string $sqlPath): void
