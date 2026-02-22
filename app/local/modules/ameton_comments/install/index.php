@@ -9,7 +9,7 @@ use Ameton\Comments\Config\Settings;
 
 class ameton_comments extends CModule
 {
-    public $MODULE_ID = 'ameton.comments';
+    public $MODULE_ID = 'ameton_comments';
     public $MODULE_GROUP_RIGHTS = 'Y';
 
     public $MODULE_VERSION;
@@ -66,21 +66,28 @@ class ameton_comments extends CModule
 
     public function installDB(): void
     {
-        $connection = Application::getConnection();
-        $sqlPath = __DIR__ . '/db/mysql/install.sql';
-
-        if (is_file($sqlPath)) {
-            $connection->queryExecute(file_get_contents($sqlPath));
-        }
+        $this->executeSqlFile(__DIR__ . '/db/mysql/install.sql');
     }
 
     public function uninstallDB(): void
     {
-        $connection = Application::getConnection();
-        $sqlPath = __DIR__ . '/db/mysql/uninstall.sql';
+        $this->executeSqlFile(__DIR__ . '/db/mysql/uninstall.sql');
+    }
 
-        if (is_file($sqlPath)) {
-            $connection->queryExecute(file_get_contents($sqlPath));
+    private function executeSqlFile(string $sqlPath): void
+    {
+        if (!is_file($sqlPath)) {
+            return;
+        }
+
+        $sql = (string) file_get_contents($sqlPath);
+        $sql = str_replace(["\r\n", "\r"], "\n", $sql);
+
+        $statements = array_filter(array_map('trim', explode(';', $sql)));
+
+        $connection = \Bitrix\Main\Application::getConnection();
+        foreach ($statements as $statement) {
+            $connection->queryExecute($statement);
         }
     }
 }
