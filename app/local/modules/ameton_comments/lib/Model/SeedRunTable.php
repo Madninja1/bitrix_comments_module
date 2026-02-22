@@ -43,12 +43,10 @@ final class SeedRunTable extends DataManager
                 ->addValidator(new LengthValidator(null, 16)),
 
             (new StringField('LAST_ERROR'))
-                ->configureRequired()
                 ->configureDefaultValue('')
                 ->addValidator(new LengthValidator(null, 255)),
 
             (new StringField('LOCK_TOKEN'))
-                ->configureRequired()
                 ->configureDefaultValue('')
                 ->addValidator(new LengthValidator(null, 36)),
 
@@ -56,7 +54,6 @@ final class SeedRunTable extends DataManager
                 ->configureNullable(true),
 
             (new StringField('LAST_STEP'))
-                ->configureRequired()
                 ->configureDefaultValue('')
                 ->addValidator(new LengthValidator(null, 64)),
 
