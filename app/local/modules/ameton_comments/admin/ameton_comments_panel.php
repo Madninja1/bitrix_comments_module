@@ -26,6 +26,4 @@ echo '<li>log_dir_abs: ' . htmlspecialcharsbx(Settings::logDirAbs()) . '</li>';
 echo '<li>seed_agent_ttl_sec: ' . Settings::seedAgentTtlSec() . '</li>';
 echo '</ul>';
 
-echo '<p>Регистрация агента сидирования будет добавлена позже через эту панель (по требованию).</p>';
-
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_admin.php");
