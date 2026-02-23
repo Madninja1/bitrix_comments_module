@@ -63,9 +63,9 @@ class ameton_comments extends CModule
         $this->uninstallDB();
         Settings::uninstallDefaults();
 
-        ModuleManager::unRegisterModule($this->MODULE_ID);
-
         $this->uninstallFiles();
+
+        ModuleManager::unRegisterModule($this->MODULE_ID);
     }
 
     public function installDB(): void
@@ -83,9 +83,21 @@ class ameton_comments extends CModule
         CopyDirFiles(
             __DIR__ . '/../admin',
             $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin',
-            true,   // rewrite
-            true    // recursive
+            true,
+            true
         );
+
+        $src = __DIR__ . '/components';
+        $dst = $_SERVER['DOCUMENT_ROOT'] . '/bitrix/components';
+
+        if (is_dir($dst)) {
+            CopyDirFiles(
+                $src,
+                $dst,
+                true,
+                true
+            );
+        }
     }
 
     public function uninstallFiles(): void
@@ -94,6 +106,8 @@ class ameton_comments extends CModule
             __DIR__ . '/../admin',
             $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin'
         );
+
+        DeleteDirFilesEx('/bitrix/components/ameton/comments.tree');
     }
 
     private function executeSqlFile(string $sqlPath): void
