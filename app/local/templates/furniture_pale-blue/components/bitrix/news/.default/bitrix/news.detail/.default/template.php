@@ -40,3 +40,15 @@
 	<?endforeach;?>
 	</div>
 </div>
+
+<?php
+$APPLICATION->IncludeComponent(
+    "ameton:comments_tree",
+    ".default",
+    [
+        "NEWS_ID" => $arResult['ID'],
+        "ROOT_LIMIT" => 10
+    ],
+    false
+);
+?>
