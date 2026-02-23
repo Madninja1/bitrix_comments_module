@@ -21,5 +21,7 @@ Loader::registerAutoLoadClasses(
         \Ameton\Comments\Agent\SeederAgent::class => 'lib/Agent/SeederAgent.php',
 
         \Ameton\Comments\Support\Logger::class => 'lib/Support/Logger.php',
+
+        \Ameton\Comments\Util\Lang::class => 'lib/Util/Lang.php',
     ]
 );
